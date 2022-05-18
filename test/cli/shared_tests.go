@@ -1,28 +1,29 @@
 package test
 
 import (
-	"testing"
 	"bytes"
 	"io/ioutil"
 	"strings"
+	"testing"
 
-	"github.com/Telmate/proxmox-api-go/cli"
-	_ "github.com/Telmate/proxmox-api-go/cli/command/commands"
+	"pvectl/cli"
+	_ "pvectl/cli/command/commands"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 type Test struct {
-	InputJson string //the inputted json
+	InputJson  string //the inputted json
 	OutputJson string //the outputted json
 
 	Expected string //the output that is expected
-	Contains bool //if the output contains (expected) or qeuals it
+	Contains bool   //if the output contains (expected) or qeuals it
 
 	NotExpected string //the output that is notexpected
-	NotContains bool //if the output contains (notexpected) or qeuals it
+	NotContains bool   //if the output contains (notexpected) or qeuals it
 
-	ReqErr bool //if an error is expected as output
+	ReqErr      bool   //if an error is expected as output
 	ErrContains string //the string the error should contain
 
 	Args []string //cli arguments
@@ -30,7 +31,7 @@ type Test struct {
 
 func ListTest(t *testing.T, args []string, expected string) {
 	cli.RootCmd.SetArgs(append(args))
-	
+
 	buffer := new(bytes.Buffer)
 
 	cli.RootCmd.SetOut(buffer)
@@ -75,20 +76,20 @@ func (test *Test) StandardTest(t *testing.T) {
 	}
 	if test.OutputJson != "" {
 		out, _ := ioutil.ReadAll(buffer)
-		require.JSONEq(t, test.OutputJson ,string(out))
+		require.JSONEq(t, test.OutputJson, string(out))
 	}
 }
 
 type LoginTest struct {
-	APIurl string
-	UserID string
+	APIurl   string
+	UserID   string
 	Password string
-	OTP string
-	ReqErr bool //if an error is expected as output
+	OTP      string
+	ReqErr   bool //if an error is expected as output
 }
 
-func (test *LoginTest) Login(t *testing.T){
-	_, err := cli.Client(test.APIurl,test.UserID,test.Password,test.OTP)
+func (test *LoginTest) Login(t *testing.T) {
+	_, err := cli.Client(test.APIurl, test.UserID, test.Password, test.OTP)
 	if test.ReqErr {
 		require.Error(t, err)
 	} else {

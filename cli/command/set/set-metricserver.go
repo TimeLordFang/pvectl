@@ -1,8 +1,9 @@
 package set
 
 import (
-	"github.com/Telmate/proxmox-api-go/cli"
-	"github.com/Telmate/proxmox-api-go/proxmox"
+	"pvectl/cli"
+	"pvectl/proxmox"
+
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +15,7 @@ Depending on the current state of the MetricServer, the MetricServer will be cre
 The config can be set with the --file flag or piped from stdin.
 For config examples see "example metricserver"`,
 	RunE: func(cmd *cobra.Command, args []string) (err error) {
-		id := cli.ValidateIDset(args, 0,"MetricServerID")
+		id := cli.ValidateIDset(args, 0, "MetricServerID")
 		config, err := proxmox.NewConfigMetricsFromJson(cli.NewConfig())
 		if err != nil {
 			return
@@ -24,7 +25,7 @@ For config examples see "example metricserver"`,
 		if err != nil {
 			return
 		}
-		cli.PrintItemSet(setCmd.OutOrStdout() ,id ,"MericServer")
+		cli.PrintItemSet(setCmd.OutOrStdout(), id, "MericServer")
 		return
 	},
 }

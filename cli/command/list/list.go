@@ -1,7 +1,8 @@
 package list
 
 import (
-	"github.com/Telmate/proxmox-api-go/cli"
+	"pvectl/cli"
+
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +15,7 @@ func init() {
 	cli.RootCmd.AddCommand(listCmd)
 }
 
-func ListRaw(IDtype string){
+func ListRaw(IDtype string) {
 	c := cli.NewClient()
 	var list map[string]interface{}
 	var err error
@@ -37,5 +38,5 @@ func ListRaw(IDtype string){
 		list, err = c.GetUserList()
 	}
 	cli.LogFatalListing(IDtype, err)
-	cli.PrintRawJson(listCmd.OutOrStdout(),list)
+	cli.PrintRawJson(listCmd.OutOrStdout(), list)
 }

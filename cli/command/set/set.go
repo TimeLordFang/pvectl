@@ -1,7 +1,8 @@
 package set
 
 import (
-	"github.com/Telmate/proxmox-api-go/cli"
+	"pvectl/cli"
+
 	"github.com/spf13/cobra"
 )
 

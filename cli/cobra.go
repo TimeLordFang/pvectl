@@ -7,14 +7,15 @@ import (
 	"os"
 	"regexp"
 
-	"github.com/Telmate/proxmox-api-go/proxmox"
+	"pvectl/proxmox"
+
 	"github.com/spf13/cobra"
 )
 
 // Global else the nested folders dont work
 var RootCmd = &cobra.Command{
-    Use:   "proxmox-api-go",
-    Short: "Application to configure Proxmox from the Api",
+	Use:   "proxmox-api-go",
+	Short: "Application to configure Proxmox from the Api",
 }
 
 func init() {
@@ -26,14 +27,14 @@ func init() {
 }
 
 func Execute() (err error) {
-    if err = RootCmd.Execute(); err != nil {
-    	return
-   	}
+	if err = RootCmd.Execute(); err != nil {
+		return
+	}
 	return
 }
 
-func NewClient()(c *proxmox.Client) {
-	c, err := Client("","","","")
+func NewClient() (c *proxmox.Client) {
+	c, err := Client("", "", "", "")
 	LogFatalError(err)
 	return
 }
@@ -80,7 +81,7 @@ func userRequiresAPIToken(userID string) bool {
 	return rxUserRequiresToken.MatchString(userID)
 }
 
-func NewConfig()(configSource []byte) {
+func NewConfig() (configSource []byte) {
 	var err error
 	file, _ := RootCmd.Flags().GetString("file")
 	if file != "" {

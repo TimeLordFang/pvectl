@@ -2,8 +2,9 @@ package list
 
 import (
 	"fmt"
-	"github.com/Telmate/proxmox-api-go/cli"
-	"github.com/Telmate/proxmox-api-go/proxmox"
+	"pvectl/cli"
+	"pvectl/proxmox"
+
 	"github.com/spf13/cobra"
 )
 
@@ -20,7 +21,7 @@ var list_snapshotsCmd = &cobra.Command{
 		cli.LogFatalError(err)
 		temp := jbody["data"].([]interface{})
 		if len(temp) == 1 {
-			fmt.Printf("Guest with ID (%d) has no snapshots",id)
+			fmt.Printf("Guest with ID (%d) has no snapshots", id)
 		} else {
 			for _, e := range temp {
 				snapshotName := e.(map[string]interface{})["name"].(string)

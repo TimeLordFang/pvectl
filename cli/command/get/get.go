@@ -1,8 +1,9 @@
 package get
 
 import (
-	"github.com/Telmate/proxmox-api-go/proxmox"
-	"github.com/Telmate/proxmox-api-go/cli"
+	"pvectl/cli"
+	"pvectl/proxmox"
+
 	"github.com/spf13/cobra"
 )
 
@@ -20,14 +21,14 @@ func GetConfig(args []string, IDtype string) (err error) {
 	c := cli.NewClient()
 	var config interface{}
 	switch IDtype {
-	case "MetricServer" :
+	case "MetricServer":
 		config, err = proxmox.NewConfigMetricsFromApi(id, c)
-	case "User" :
+	case "User":
 		config, err = proxmox.NewConfigUserFromApi(id, c)
 	}
 	if err != nil {
 		return
 	}
-	cli.PrintFormattedJson(getCmd.OutOrStdout(),config)
+	cli.PrintFormattedJson(getCmd.OutOrStdout(), config)
 	return
 }
